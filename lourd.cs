@@ -808,35 +808,7 @@ namespace lourd
         private void button1_Click(object sender, EventArgs e)
         {
 
-            /*
-                        panele.Size = new Size(1080, 640);
-                        b1.Size = new Size(30, 30);
-                        b2.Size = new Size((int)30, 30);
-
-
-                        panele.Controls.Add(b1);
-                        panele.Controls.Add(b2);
-                        b1.BackColor = Color.Black;
-                        b2.BackColor = Color.Blue;
-
-                        label1.Text = (valuedistance1).ToString();
-                        label2.Text = (valuedistance2).ToString();
-                        /*
-                        panele.Size = new Size(1080, 640);
-                        b1.Size = new Size(30, 30);
-                        b2.Size = new Size((int)30, 30);
-
-
-                        panele.Controls.Add(b1);
-                        panele.Controls.Add(b2);
-                        b1.BackColor = Color.Black;
-                        b2.BackColor = Color.Blue;
-                        b1.Location = new Point((panele.Width - (int)valueredifinitiontag1X), (panele.Height - (int)valueredifinitiontag1Y));
-                        b2.Location = new Point((panele.Width - (int)valueredifinitiontag2X), (panele.Height - (int)valueredifinitiontag2Y));
-                        //label1.Text = (valuedistance1- valuedistance2).ToString();
-                        //label1.Text = (valuedistance).ToString();
-                        label1.Text = (valuedistance1).ToString();
-                        label2.Text = (valuedistance2).ToString();*/
+            
         }
 
 
