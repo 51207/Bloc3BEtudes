@@ -26,28 +26,28 @@ namespace lourd
 {
     public partial class lourd : Form
     {
-        
+        //**** valeur qui permet de stocker la valeur dans une nouvelle case de la liste
+        int callrandom =0;
+
+
+
+
+
+        // s'il y a 5 cibles, il faut que   n >4  dans la question nextquestionclick()
+        // s'il y a 4 cibles, il faut que   n >3  dans la question nextquestionclick()
+        // s'il y a 3 cibles, il faut que   n >2  dans la question nextquestionclick()
+
         //private tag
+
         private static int tag2 = 26884;
-      
-        
-        public static int tag2p
-        {
-
-            get { return tag2; }
-            set { tag2 = value; }
-        
-        }
 
 
-
-
-
+        //***tailletableau: il est en static parceque la methode qui l'utilise est en statique  si non ça ne marchera pas ****
         int tailletableau = 6;
         private int T(int s)
         {
             int[] T = new int[tailletableau];
-            T[0] = 26884;
+          
             T[1] = 26885;
             T[2] = 26921;
             T[3] = 26963;
@@ -55,6 +55,17 @@ namespace lourd
 //avant T[4]=26888 est en commentaire et initialisation du tableau est  new int [5]
             return T[s];
         }
+
+        public int tag2p
+        {
+
+            get { return tag2; }
+            set { tag2 = value; }
+
+        }
+
+
+
 
         //check la distance 
         private double resultvalue;
@@ -154,9 +165,11 @@ namespace lourd
         private Button Exit;
         private Button recommence;
         private Label recapitulatif;
+       
+        
+        
+        
         private static double valueredifinitiontag2Y;
-
-
         //encodage de cette variable double permettre de stocker la valeur dans une variable privée
         public static double redifinitiontag1X
         {
@@ -189,7 +202,9 @@ namespace lourd
             InitializeComponent();
             
             var sound1 = new SoundPlayer(@"C:\Users\aliou\Music\Pirate-Love-Song-Black-Heart.wav");
-            for (int i = 0; i < tailletableau - 1; i++)
+            
+            //initialisattion de la liste des reponses qui doivent être stocké
+            for (int i = 0; i < tailletableau ; i++)
             {
                 stockagevaleur.Add(0);
             }
@@ -226,10 +241,6 @@ namespace lourd
 
 
 
-            //  P.WillDelayInterval = 20;
-            //   double s = P.KeepAlivePeriod.TotalMilliseconds;
-
-            //  int p = mymqttclient.Settings.TimeoutOnReceiving;
 
 
         }
@@ -239,27 +250,31 @@ namespace lourd
 
             string path = @"C:\Users\aliou\OneDrive\Bureau\TOCOSS.txt";
             if (File.Exists(path))
-            {
+            {//si le fichier existe
+
                 // Create a file to write to.
                 using (StreamWriter sw = File.CreateText(path))
                 {
                     string s = System.Text.Encoding.Default.GetString(e.Message);
                    
                     sw.WriteLine(s);
-                    //var aa = Encoding.UTF8.GetDecoder();
-                    //Console.WriteLine(s);
+                   
                 }
             }
+
+
 
             // Open the file to read from.
             using (StreamReader sr = File.OpenText(path))
             {
                 string s;
-                while ((s = sr.ReadLine()) != null) // tant qu'on lit le dossier bloc path  on applique cette deserialisation
-                                                    //on peut noter s=sr.ReadLine()=!null  || s=sr.ReadLine()==null)
-                {
+                while ((s = sr.ReadLine()) != null) { 
+                    
+                    //tant que le msg qui va être lu n'est pas null cad tant que <<s !=" ";>> (n'est pas vide =null)  on applique cette deserialisation
+                     
+               
                     Collection<jsondeserialize.Example> todo = JsonSerializer.Deserialize<Collection<jsondeserialize.Example>>(File.ReadAllText(path));
-                    //	Console.WriteLine(s);
+                    //	File.ReadAllText(path): lit tout le texte qui se trouve dans le fichier et le ferme
                     foreach (var item in todo)
                     {
                         //Dictionary<float, int> dico = new Dictionary<float, int>;
@@ -278,8 +293,11 @@ namespace lourd
                             Tag1 TAG1 = new Tag1();
                             Tag2 TAG2 = new Tag2();
                             //different tags qui ne doivent pas être supprimés
+                           
+                            //****Tag du joueur:*****
                             int tag1 = 26925;
-                            //in tag2=26884;
+                            //***
+                          
 
 
                             if (tag1 == tagid)
@@ -293,8 +311,13 @@ namespace lourd
 
                                 dico1.Add(tagid, TAG1);
 
-                                    redifinitiontag1X = (double)(TAG1.TaginX1 );
+                                redifinitiontag1X = (double)(TAG1.TaginX1 );
                                 redifinitiontag1Y = (double)(TAG1.TaginY1 );
+
+                                /*
+                                redifinitiontag1X = (double)(TAG1.TaginX1 / 25);
+                                redifinitiontag1Y = (double)(TAG1.TaginY1 / 25);
+                                */
                                 double carrex1 = (valueredifinitiontag1X * valueredifinitiontag1X);
                                 double carrey1 = (valueredifinitiontag1Y * valueredifinitiontag1Y);
                                 double dist1 = Math.Sqrt((carrex1) + (carrey1));
@@ -317,7 +340,7 @@ namespace lourd
                                 dico2.Add(tagid, TAG2);
                                 
 
-                                    redifinitiontag2X = (double)(TAG2.TaginX2 ); 
+                                redifinitiontag2X = (double)(TAG2.TaginX2 ); 
                                 redifinitiontag2Y = (double)(TAG2.TaginY2 );
 
                                 double carrex2 = (valueredifinitiontag2X * valueredifinitiontag2X);
@@ -403,18 +426,18 @@ namespace lourd
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 256);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 17);
+            this.label2.Size = new System.Drawing.Size(16, 17);
             this.label2.TabIndex = 2;
-            this.label2.Text = "label2";
+            this.label2.Text = "..";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 214);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.Size = new System.Drawing.Size(16, 17);
             this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
+            this.label1.Text = "..";
             // 
             // Start
             // 
@@ -442,7 +465,7 @@ namespace lourd
             this.noticeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1646, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1646, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -452,7 +475,7 @@ namespace lourd
             this.butDuJeuToolStripMenuItem,
             this.sonDuJeuToolStripMenuItem});
             this.hToolStripMenuItem.Name = "hToolStripMenuItem";
-            this.hToolStripMenuItem.Size = new System.Drawing.Size(52, 26);
+            this.hToolStripMenuItem.Size = new System.Drawing.Size(52, 24);
             this.hToolStripMenuItem.Text = "aide";
             // 
             // butDuJeuToolStripMenuItem
@@ -488,7 +511,7 @@ namespace lourd
             // noticeToolStripMenuItem
             // 
             this.noticeToolStripMenuItem.Name = "noticeToolStripMenuItem";
-            this.noticeToolStripMenuItem.Size = new System.Drawing.Size(47, 26);
+            this.noticeToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
             this.noticeToolStripMenuItem.Text = "Exit";
             this.noticeToolStripMenuItem.Click += new System.EventHandler(this.noticeToolStripMenuItem_Click);
             // 
@@ -530,9 +553,9 @@ namespace lourd
             // 
             // but4
             // 
-            this.but4.Location = new System.Drawing.Point(260, 364);
+            this.but4.Location = new System.Drawing.Point(245, 364);
             this.but4.Name = "but4";
-            this.but4.Size = new System.Drawing.Size(75, 23);
+            this.but4.Size = new System.Drawing.Size(90, 23);
             this.but4.TabIndex = 5;
             this.but4.Tag = "4";
             this.but4.Text = "X";
@@ -543,7 +566,7 @@ namespace lourd
             // 
             this.but3.Location = new System.Drawing.Point(15, 364);
             this.but3.Name = "but3";
-            this.but3.Size = new System.Drawing.Size(75, 23);
+            this.but3.Size = new System.Drawing.Size(91, 23);
             this.but3.TabIndex = 4;
             this.but3.Tag = "3";
             this.but3.Text = "X";
@@ -552,9 +575,9 @@ namespace lourd
             // 
             // but2
             // 
-            this.but2.Location = new System.Drawing.Point(260, 319);
+            this.but2.Location = new System.Drawing.Point(245, 319);
             this.but2.Name = "but2";
-            this.but2.Size = new System.Drawing.Size(75, 23);
+            this.but2.Size = new System.Drawing.Size(90, 23);
             this.but2.TabIndex = 3;
             this.but2.Tag = "2";
             this.but2.Text = "X";
@@ -565,7 +588,7 @@ namespace lourd
             // 
             this.but1.Location = new System.Drawing.Point(15, 319);
             this.but1.Name = "but1";
-            this.but1.Size = new System.Drawing.Size(75, 23);
+            this.but1.Size = new System.Drawing.Size(91, 23);
             this.but1.TabIndex = 2;
             this.but1.Tag = "1";
             this.but1.Text = "X";
@@ -765,12 +788,11 @@ namespace lourd
             // 
             this.timer2.Enabled = true;
             this.timer2.Interval = 1000;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+           // this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // timersearch
             // 
             this.timersearch.Interval = 1000;
-            //this.timersearch.Tick += new System.EventHandler(this.timersearch_Tick);
             // 
             // lourd
             // 
@@ -809,13 +831,13 @@ namespace lourd
         {
 
             
-        }
+                            }
 
 
 
 
 
-        private void timer1_Tick(object sender, EventArgs e)
+         private void timer1_Tick(object sender, EventArgs e)
         {
 
             label1.Text = (valuedistance1).ToString();
@@ -881,7 +903,7 @@ namespace lourd
                 
                 labelreponse.BackColor = Color.Green;
                 
-                askQuestion(Random());
+              
                 
                 this.Controls.Add(panelsearch);
                 
@@ -1078,7 +1100,7 @@ namespace lourd
 
                     but1.Text = "Thomas Edinson";
                     but2.Text = "John Bradley";
-                    but3.Text = "Albert Einstein";
+                    but3.Text = " Einstein";
                     but4.Text ="Isaac Newton";
 
                     correctAnswer = 3;
@@ -1107,9 +1129,9 @@ namespace lourd
                     labelquestion.Text = "Quelle est la première femme de couleur à aller dans l'espace?";
 
                     but1.Text = "Dr Marie Ampère";
-                    but2.Text = "Dr Lae washington";
-                    but3.Text = "Dr Mae Jeminson";
-                    but4.Text = "dr georges Mendes";
+                    but2.Text = "Dr washington";
+                    but3.Text = "Dr M.Jeminson";
+                    but4.Text = "dr Mia Mendes";
 
                     correctAnswer = 3;
 
@@ -1135,9 +1157,9 @@ namespace lourd
 
                     labelquestion.Text = "Qui a gagné le prix Nobel en physique pour sa recherche sur la radioactivité?";
 
-                    but1.Text = "Mariah Carrey";
-                    but2.Text = "Marie Curtis";
-                    but3.Text = "Marie Ampère";
+                    but1.Text = "Maria Carrey";
+                    but2.Text = "Marie Otis";
+                    but3.Text = "Marie Asly";
                     but4.Text = "Marie Curry";
 
                     correctAnswer = 4;
@@ -1193,19 +1215,15 @@ namespace lourd
 
             if (MessageBox.Show("Etes vous prêt", "Start", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Random s = new Random();
-            
-                for (int i = 1; i < 15; i++)
-                {
-
-                    askQuestion(Random());
                 
-                }
                 
                 this.Controls.Remove(panelacceuil);
-                
+
+               
                 this.Controls.Add(panelenigme);
-                
+              
+                askQuestion(Random());
+               
                 this.Size = new Size(500, 600);
                 
                 panelenigme.Location = new Point(64, 31);
@@ -1227,7 +1245,7 @@ namespace lourd
         //valeur permettant le random
         private int joke;
         public int previousvalue = -1;
-        public int valuerandom;
+        //public int valuerandom;  
         private int value ;
 
 
@@ -1245,41 +1263,49 @@ namespace lourd
         public int Random()
         {
             int values = 0;
-
+            int valuerandom;
         
             
            Random r = new Random();
           
 
 
-            for (int i = 0; i < tailletableau-1; i++)
-            {
+          
 
                 valuerandom = r.Next(1, 13);
-                stockagevaleur[i] = valuerandom;
-               
-                
-                for (int j = 0; j < tailletableau-1; j++)
+
+
+
+           // for(int j = 0;j < stockagevaleur.Count;j++)
+                foreach (var plat in stockagevaleur)
+                {
+                bool intersection = true;
+                while (intersection)
                 {
 
-                    if (stockagevaleur[j] == valuerandom)
+                    intersection = false;
+                    if (valuerandom == plat)
                     {
-
-
-                        values = r.Next(1, 13);
+                        intersection = true;
+                        valuerandom = r.Next(1, 13);
                         
                     }
-                    else
-                    {
+                   
 
-
-                        values = valuerandom;
-                    }
                 }
+                  
+               
             }
-          
-            return values;
+            stockagevaleur[callrandom] = valuerandom   ;
+            //**vérification des valeurs   de la liste 
+            int a=  stockagevaleur[0];
+            int b=stockagevaleur[1];
+            int c =  stockagevaleur[2];
+            int d = stockagevaleur[3];
+            int e=stockagevaleur[4];
 
+
+             return stockagevaleur[callrandom];
         }
 
 
@@ -1335,8 +1361,8 @@ namespace lourd
 
 
 
-        //valeur entiere permettant l'incrementation 
-        public int n = 1;
+        //valeur entiere permettant l'incrementation des cibles
+        public   int n = 1;
         private void checkdistance_Click(object sender, EventArgs e)
         {
             
@@ -1347,9 +1373,7 @@ namespace lourd
 
 
 
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-        }
+       
         
 
 
@@ -1420,14 +1444,17 @@ namespace lourd
                                              
                                            else
                                                {
-                                                
-                                                    tag2 = T((n+1));
-                                                 
-                                                    if(n>3){
+                                               
+                                                   //***reinitialisation de tag2 ****
+
+                                                  
+                                                    tag2 = T((n));
+                                      
+                                                    if(n>4){
                                                                 
                                                             //avant if(n==3)
                        
-                                                              if (MessageBox.Show(" jeu terminer" ,"Felicitation", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
+                                                              if (MessageBox.Show(" jeu terminer. Votre score est de "+""+labelmessageform3.Text +" points","Felicitation ", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
                                                                 {
 
                                                                        Application.Exit();
@@ -1446,17 +1473,19 @@ namespace lourd
 
 
                                                             }
-                  
-                    
+                                                                 callrandom++;
+                                                                  
                                                                    this.Controls.Remove(panelsearch);
-                                                
-                                                                   this.Controls.Add(panelenigme);
-                    
-                                                                   askQuestion(Random());
-                                                                        
-                                              }
+                                                                
+                                                                
+                                                                askQuestion(Random());
+                                                                 
+                                                                  
+                                                                  this.Controls.Add(panelenigme);
+
+                                                           }
                
-                                                    n++;
+                n++;
 
                     }
         }
@@ -1480,7 +1509,12 @@ namespace lourd
                 {
 
                     Application.Restart();
-                
+                    Environment.Exit(0);
+                }
+                else {
+                    Application.Exit();
+
+                    Environment.Exit(1);
                 }
 
                     this.Controls.Add(panelgameover);
@@ -1509,7 +1543,7 @@ namespace lourd
         public string stringTime()
         {
 
-            int s,m;
+            int s, m;
             
             string time = "00:00";
             
